@@ -36,7 +36,7 @@ jobs:
             --platform linux/arm/v7 \
             --output "type=image,push=true" \
             -t ${{ secrets.registryUsername }}/linkerd2:${{ matrix.version }} \
-            .
+            --file Dockerfile ./
 
   linkerd2-proxy-init:
     strategy:
@@ -67,7 +67,7 @@ jobs:
             --platform linux/arm/v7 \
             --output "type=image,push=true" \
             -t ${{ secrets.registryUsername }}/linkerd2-proxy-init:${{ matrix.version }} \
-            .
+            --file Dockerfile ./
 
   linkerd2-proxy:
     strategy:
@@ -98,4 +98,4 @@ jobs:
             --platform linux/arm/v7 \
             --output "type=image,push=true" \
             -t ${{ secrets.registryUsername }}/linkerd2-proxy:${{ matrix.version }} \
-            .
+            --file Dockerfile ./
