@@ -30,13 +30,41 @@ jobs:
       with:
         repository: gazzyt/linkerd2
         ref: ${{ matrix.version }}
-    - name: Build and push scope image
+    - name: Build and push proxy image
       run: |
           docker buildx build \
-            --platform linux/amd64,linux/arm/v7,linux/arm64 \
+            --platform linux/arm/v7 \
             --output "type=image,push=true" \
-            -t ${{ secrets.registryUsername }}/linkerd2-proxy-init:${{ matrix.version }} \
+            -t ${{ secrets.registryUsername }}/linkerd2:${{ matrix.version }} \
             --file ./Dockerfile-proxy .
+    - name: Build and push debug image
+      run: |
+          docker buildx build \
+            --platform linux/arm/v7 \
+            --output "type=image,push=true" \
+            -t ${{ secrets.registryUsername }}/linkerd2:${{ matrix.version }} \
+            --file ./Dockerfile-debug .
+    - name: Build and push debug image
+      run: |
+          docker buildx build \
+            --platform linux/arm/v7 \
+            --output "type=image,push=true" \
+            -t ${{ secrets.registryUsername }}/linkerd2:${{ matrix.version }} \
+            --file ./Dockerfile-debug .
+    - name: Build and push web image
+      run: |
+          docker buildx build \
+            --platform linux/arm/v7 \
+            --output "type=image,push=true" \
+            -t ${{ secrets.registryUsername }}/linkerd2:${{ matrix.version }} \
+            --file ./web/Dockerfile ./web
+    - name: Build and push controller image
+      run: |
+          docker buildx build \
+            --platform linux/arm/v7 \
+            --output "type=image,push=true" \
+            -t ${{ secrets.registryUsername }}/controller:${{ matrix.version }} \
+            --file ./controller/Dockerfile ./controller
 
   linkerd2-proxy-init:
     strategy:
@@ -64,8 +92,9 @@ jobs:
     - name: Build and push scope image
       run: |
         docker buildx build \
+          --platform linux/arm/v7 \
           --output "type=image,push=true" \
-          -t ${{ secrets.registryUsername }}/linkerd2-proxy-init:${{ matrix.version }} \
+          -t ${{ secrets.registryUsername }}/proxy-init:${{ matrix.version }} \
           .
 
   linkerd2-proxy:
@@ -94,6 +123,7 @@ jobs:
     - name: Build and push image
       run: |
         docker buildx build \
+          --platform linux/arm/v7 \
           --output "type=image,push=true" \
-          -t ${{ secrets.registryUsername }}/linkerd2-proxy:${{ matrix.version }} \
+          -t ${{ secrets.registryUsername }}/proxy:${{ matrix.version }} \
           .
