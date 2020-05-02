@@ -57,7 +57,7 @@ jobs:
             --platform linux/arm/v7 \
             --output "type=image,push=true" \
             -t ${{ secrets.registryUsername }}/linkerd2:${{ matrix.version }} \
-            --file ./web/Dockerfile ./web
+            --file ./web/Dockerfile .
     - name: Build and push controller image
       run: |
           docker buildx build \
