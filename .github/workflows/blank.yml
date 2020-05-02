@@ -32,10 +32,11 @@ jobs:
         ref: ${{ matrix.version }}
     - name: Build and push scope image
       run: |
-        docker buildx build \
-          --output "type=image,push=true" \
-          -t ${{ secrets.registryUsername }}/linkerd2:${{ matrix.version }} \
-          --file Dockerfile-proxy .
+          docker buildx build \
+            --platform linux/amd64,linux/arm/v7,linux/arm64 \
+            --output "type=image,push=true" \
+            -t ${{ secrets.registryUsername }}/linkerd2-proxy-init:${{ matrix.version }} \
+            --file ./Dockerfile-proxy .
 
   linkerd2-proxy-init:
     strategy:
