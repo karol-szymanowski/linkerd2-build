@@ -32,11 +32,10 @@ jobs:
         ref: ${{ matrix.version }}
     - name: Build and push scope image
       run: |
-        docker buildx build \
-          --platform linux/arm/v7 \
+        docker buildx build --platform linux/arm/v7 \
           --output "type=image,push=true" \
           -t ${{ secrets.registryUsername }}/linkerd2:${{ matrix.version }} \
-          .
+          --file Dockerfile-proxy .
 
   linkerd2-proxy-init:
     strategy:
@@ -63,8 +62,7 @@ jobs:
         ref: ${{ matrix.version }}
     - name: Build and push scope image
       run: |
-        docker buildx build \
-          --platform linux/arm/v7 \
+        docker buildx build --platform linux/arm/v7 \
           --output "type=image,push=true" \
           -t ${{ secrets.registryUsername }}/linkerd2-proxy-init:${{ matrix.version }} \
           .
@@ -94,8 +92,7 @@ jobs:
         ref: ${{ matrix.version }}
     - name: Build and push image
       run: |
-        docker buildx build \
-          --platform linux/arm/v7 \
+        docker buildx build --platform linux/arm/v7 \
           --output "type=image,push=true" \
           -t ${{ secrets.registryUsername }}/linkerd2-proxy:${{ matrix.version }} \
           .
