@@ -35,7 +35,7 @@ jobs:
           docker buildx build \
             --platform linux/arm/v7 \
             --output "type=image,push=true" \
-            -t ${{ secrets.registryUsername }}/linkerd2-proxy-init:${{ matrix.version }} \
+            -t ${{ secrets.registryUsername }}/linkerd2:${{ matrix.version }} \
             .
 
   linkerd2-proxy-init:
@@ -92,10 +92,10 @@ jobs:
       with:
         repository: gazzyt/linkerd2-proxy
         ref: ${{ matrix.version }}
-    - name: Build and push scope image
+    - name: Build and push image
       run: |
           docker buildx build \
             --platform linux/arm/v7 \
             --output "type=image,push=true" \
-            -t ${{ secrets.registryUsername }}/linkerd2-proxy-init:${{ matrix.version }} \
+            -t ${{ secrets.registryUsername }}/linkerd2-proxy:${{ matrix.version }} \
             .
