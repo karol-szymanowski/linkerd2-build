@@ -35,8 +35,8 @@ jobs:
           docker buildx build \
             --platform linux/arm/v7 \
             --output "type=image,push=true" \
-            --build-arg IMAGE_TAG=${{ matrix.version }} \
-            -t ${{ secrets.registryUsername }}/linkerd2-proxy:${{ matrix.version }} .
+            -t ${{ secrets.registryUsername }}/linkerd2-proxy-init:${{ matrix.version }} \
+            .
 
   linkerd2-proxy-init:
     strategy:
@@ -66,8 +66,8 @@ jobs:
           docker buildx build \
             --platform linux/arm/v7 \
             --output "type=image,push=true" \
-            --build-arg IMAGE_TAG=${{ matrix.version }} \
-            -t ${{ secrets.registryUsername }}/linkerd2-proxy-init:${{ matrix.version }} .
+            -t ${{ secrets.registryUsername }}/linkerd2-proxy-init:${{ matrix.version }} \
+            .
 
   linkerd2-proxy:
     strategy:
@@ -97,5 +97,5 @@ jobs:
           docker buildx build \
             --platform linux/arm/v7 \
             --output "type=image,push=true" \
-            --build-arg IMAGE_TAG=${{ matrix.version }} \
-            -t ${{ secrets.registryUsername }}/linkerd2-proxy:${{ matrix.version }} .
+            -t ${{ secrets.registryUsername }}/linkerd2-proxy-init:${{ matrix.version }} \
+            .
